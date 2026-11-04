@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-#   curl -fsSL https://raw.githubusercontent.com/sterling5241/print-buddy-streamer/main/install-printer.sh | bash -s -- light
+#   curl -fsSL https://raw.githubusercontent.com/printer-buddy/print-buddy-streamer/main/install-printer.sh | bash -s -- light
 #   ... | bash -s -- basic
 #   ... | bash -s -- advanced rtsp://192.168.0.50/stream
 set -euo pipefail
-REPO=https://github.com/sterling5241/print-buddy-streamer.git
-MJPG_URL=https://github.com/sterling5241/print-buddy-streamer/releases/download/mjpg-streamer
+REPO=https://github.com/printer-buddy/print-buddy-streamer.git
+MJPG_URL=https://github.com/printer-buddy/print-buddy-streamer/releases/download/mjpg-streamer
 MJPG_DIR=/usr/local/lib/print-buddy-streamer/mjpg-streamer
 DIR="$HOME/print-buddy-streamer"
 DATA="$HOME/printer_data"
