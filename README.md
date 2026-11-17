@@ -1,3 +1,5 @@
+<p align="center"><img src="https://raw.githubusercontent.com/printer-buddy/printer-buddy/nightly/assets/logo.png" alt="Printer Buddy" width="160"></p>
+
 # Print Buddy Streamer
 
 Camera streaming for Printer Buddy. Runs on whatever machine the camera is plugged into (a printer, a Pi, a server).
@@ -35,3 +37,7 @@ Moonraker is running on the same machine.
 | light | `http://<host>:<port>/?action=stream` | `http://<host>:<port>/?action=snapshot` |
 | basic | `http://<host>:<port>/stream` | `http://<host>:<port>/snapshot` |
 | advanced | `http://<host>:1984/api/webrtc?src=<name>` (WebRTC), `rtsp://<host>:8554/<name>` | `http://<host>:1984/api/frame.jpeg?src=<name>` |
+
+## License
+
+Copyright (C) 2026 sterling motuz. Licensed under the GNU Affero General Public License v3.0 only (AGPL-3.0-only), with extra terms: keep the licence header in each file, and include a CHANGELOG of any changes. See [LICENSE](LICENSE) and [NOTICE](NOTICE). The Printer Buddy name and logo are not covered by the licence.
