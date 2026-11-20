@@ -18,7 +18,7 @@ from . import detect
 GO2RTC_API = 1984
 GO2RTC_RTSP = 8554
 GO2RTC_WEBRTC = 8555
-MJPG_DIR = "/usr/local/lib/print-buddy-streamer/mjpg-streamer"
+MJPG_DIR = os.environ.get("PB_MJPG_DIR", "/usr/local/lib/print-buddy-streamer/mjpg-streamer")
 
 
 @dataclass
