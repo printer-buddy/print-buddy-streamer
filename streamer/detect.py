@@ -11,6 +11,7 @@
 #Additional term (AGPL-3.0 section 7c, mark changed versions): if you make any changes, you must include a CHANGELOG with all changes and their dates
 import fcntl
 import glob
+import itertools
 import os
 import re
 import shutil
@@ -44,7 +45,7 @@ def has_mjpeg(device):
     except OSError:
         return False
     try:
-        for i in range(64):
+        for i in itertools.count():
             # struct v4l2_fmtdesc: index, type (1 = video capture), flags, description[32], pixelformat at byte 44
             buf = bytearray(struct.pack("=III32sII12x", i, 1, 0, b"", 0, 0))
             try:
@@ -53,7 +54,6 @@ def has_mjpeg(device):
                 return False
             if struct.unpack_from("=I", buf, 44)[0] == MJPG:
                 return True
-        return False
     finally:
         os.close(fd)
 
