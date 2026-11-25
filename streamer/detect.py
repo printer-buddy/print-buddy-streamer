@@ -46,12 +46,12 @@ def has_mjpeg(device):
     try:
         for i in range(64):
             # struct v4l2_fmtdesc: index, type (1 = video capture), flags, description[32], pixelformat at byte 44
-            buf = bytearray(struct.pack("<III32sII12x", i, 1, 0, b"", 0, 0))
+            buf = bytearray(struct.pack("=III32sII12x", i, 1, 0, b"", 0, 0))
             try:
                 fcntl.ioctl(fd, VIDIOC_ENUM_FMT, buf)
             except OSError:
                 return False
-            if struct.unpack_from("<I", buf, 44)[0] == MJPG:
+            if struct.unpack_from("=I", buf, 44)[0] == MJPG:
                 return True
         return False
     finally:
