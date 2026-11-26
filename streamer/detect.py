@@ -9,12 +9,18 @@
 #Additional term (AGPL-3.0 section 7b, keep author credit): keep this header
 #
 #Additional term (AGPL-3.0 section 7c, mark changed versions): if you make any changes, you must include a CHANGELOG with all changes and their dates
+import fcntl
 import glob
+import itertools
 import os
 import re
 import shutil
 import socket
+import struct
 import subprocess
+
+VIDIOC_ENUM_FMT = 0xC0405602
+MJPG = int.from_bytes(b"MJPG", "little")
 
 
 def usb_cameras():
@@ -34,13 +40,22 @@ def libcamera_count():
 
 
 def has_mjpeg(device):
-    if not shutil.which("v4l2-ctl"):
+    try:
+        fd = os.open(device, os.O_RDWR | os.O_NONBLOCK)
+    except OSError:
         return False
     try:
-        out = subprocess.run(["v4l2-ctl", "-d", device, "--list-formats"], capture_output=True, text=True, timeout=10).stdout
-    except (OSError, subprocess.TimeoutExpired):
-        return False
-    return "MJPG" in out
+        for i in itertools.count():
+            # struct v4l2_fmtdesc: index, type (1 = video capture), flags, description[32], pixelformat at byte 44
+            buf = bytearray(struct.pack("=III32sII12x", i, 1, 0, b"", 0, 0))
+            try:
+                fcntl.ioctl(fd, VIDIOC_ENUM_FMT, buf)
+            except OSError:
+                return False
+            if struct.unpack_from("=I", buf, 44)[0] == MJPG:
+                return True
+    finally:
+        os.close(fd)
 
 
 def local_ip():
